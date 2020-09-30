@@ -6,4 +6,4 @@ sleep 60
 mkdir output
 for i in `cat ../ips`; do nslookup $i | grep name | awk '{print $4}' > output/nslookupip-$NOW-$i ; done 
 for i in `cat ../ips`; do mtr --report $i | grep -v ^Start > output/tracerip-$NOW-$i ; done
-for i in `cat ips`; do curl -so /dev/null $i > output/outputcurl-$NOW-$i; done
+for i in `cat ../ips`; do curl -so /dev/null $i > output/outputcurl-$NOW-$i; done
