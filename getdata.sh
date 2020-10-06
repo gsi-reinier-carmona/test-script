@@ -9,7 +9,7 @@ mkdir output
 for i in `cat ../ips`; do nslookup $i | grep -v 127.0.0.53| awk -v var=$n 'BEGIN {print "{\"domain\"" ":" "\"'$i'\"\n ,\"day\"" ":" "\"'$DAY'\"\n ,\"time\"" ":" "\"'$TIME'\""} /^Name:/ {N=$2}; /^Address:/ {print ",\"ip" var++"\""  ":" "\"" $2 "\""} END {print "}" }' > output/nslookupip-$i.json ; done
 for i in `cat ../ips`; do mtr --json $i | grep -v ^Start > output/tracerip-$i.json ; done
 for i in `cat ../ips`; do curl -so /dev/null $i > output/outputcurl-$i.json; done
-awk '/"src"/{print "      \"day\""":" " \"'$DAY'\",\n      \"time\"" ":" " \"'$TIME'\","}1' output/tracerip-updates.push.services.mozilla.com > tmp && mv tmp output/tracerip-updates.push.services.mozilla.com
-awk '/"src"/{print "      \"day\""":" " \"'$DAY'\",\n      \"time\"" ":" " \"'$TIME'\","}1' output/tracerip-fcm.googleapis.com > tmp && mv tmp output/tracerip-fcm.googleapis.com
-awk '{gsub(/}$/,",\"day\"" ":" "\"'$DAY'\"\n ,\"time\"" ":" "\"'$TIME'\"}"); print}' output/outputcurl-updates.push.services.mozilla.com > tmp && mv tmp output/outputcurl-updates.push.services.mozilla.com
-awk '{gsub(/}$/,",\"day\"" ":" "\"'$DAY'\"\n ,\"time\"" ":" "\"'$TIME'\"}"); print}' output/outputcurl-fcm.googleapis.com > tmp && mv tmp output/outputcurl-fcm.googleapis.com
+awk '/"src"/{print "      \"day\""":" " \"'$DAY'\",\n      \"time\"" ":" " \"'$TIME'\","}1' output/tracerip-updates.push.services.mozilla.com.json > tmp && mv tmp output/tracerip-updates.push.services.mozilla.com.json
+awk '/"src"/{print "      \"day\""":" " \"'$DAY'\",\n      \"time\"" ":" " \"'$TIME'\","}1' output/tracerip-fcm.googleapis.com.json > tmp && mv tmp output/tracerip-fcm.googleapis.com.json
+awk '{gsub(/}$/,",\"day\"" ":" "\"'$DAY'\"\n ,\"time\"" ":" "\"'$TIME'\"}"); print}' output/outputcurl-updates.push.services.mozilla.com.json > tmp && mv tmp output/outputcurl-updates.push.services.mozilla.com.json
+awk '{gsub(/}$/,",\"day\"" ":" "\"'$DAY'\"\n ,\"time\"" ":" "\"'$TIME'\"}"); print}' output/outputcurl-fcm.googleapis.com.json > tmp && mv tmp output/outputcurl-fcm.googleapis.com.json
